@@ -12,6 +12,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = ch02-sysinfo
 TEMPLATE = app
 
+
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
@@ -33,14 +34,23 @@ SOURCES += \
 
 HEADERS += \
     CpuWidget.h \
-        MainWindow.h \
+    MainWindow.h \
     MemoryWidget.h \
-        SysInfo.h \ \
+    SysInfo.h \
     SysInfoWidget.h
+
+COMPILE_MSG = "Compiling on"
 
 windows {
     SOURCES += SysInfoWindows.cpp
     HEADERS += SysInfoWindows.h
+    message($$COMPILE_MSG windows)
+}
+
+linux {
+    SOURCES += SysInfoLinuxImpl.cpp
+    HEADERS += SysInfoLinuxImpl.h
+    message($$COMPILE_MSG linux)
 }
 
 FORMS += \

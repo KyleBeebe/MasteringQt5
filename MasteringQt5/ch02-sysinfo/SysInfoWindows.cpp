@@ -14,9 +14,19 @@ double SysInfoWindows::memoryUsed(){
     MEMORYSTATUSEX memoryStatus;
     memoryStatus.dwLength = sizeof(MEMORYSTATUSEX);
     GlobalMemoryStatusEx(&memoryStatus);
-    qulonglong memoryPhysicalUsed = memoryStatus.ullTotalPhys - memoryStatus.ullAvailPhys;
 
-    return (double)memoryPhysicalUsed / (double)memoryStatus.ullTotalPhys * 100.0;
+    memoryTotal = (double)memoryStatus.ullTotalPhys;
+    memoryUsing = memoryStatus.ullTotalPhys - memoryStatus.ullAvailPhys;
+
+    return (double)(memoryStatus.ullTotalPhys - memoryStatus.ullAvailPhys) / (double)memoryStatus.ullTotalPhys * 100.0;
+}
+
+double SysInfoWindows::rawMemoryUsed() {
+    return memoryUsing;
+}
+
+double SysInfoWindows::rawMemoryHave(){
+    return memoryTotal;
 }
 
 QVector<qulonglong> SysInfoWindows::cpuRawData()

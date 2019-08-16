@@ -33,7 +33,10 @@ MemoryWidget::MemoryWidget(QWidget *parent) :
 
     QChart* chart = chartView().chart();
     chart->addSeries(areaSeries);
-    chart->setTitle("Memory used");
+    QString s("Memory used: ");
+    s += QString::number(0) + "/" + QString::number(10);
+
+    chart->setTitle(s);
     chart->createDefaultAxes();
     chart->axisX()->setVisible(false);
     chart->axisX()->setRange(0, CHART_X_RANGE_MAX);
@@ -44,6 +47,13 @@ void MemoryWidget::updateSeries()
 {
     double memoryUsed = SysInfo::instance().memoryUsed();
     mSeries->append(mPointPositionX++, memoryUsed);
+
+    //update used title
+    QChart* chart = chartView().chart();
+    QString s("Memory used: ");
+    s += QString::number(SysInfo::instance().rawMemoryUsed()/1000000000.0)
+            + "/" + QString::number(SysInfo::instance().rawMemoryHave()/1000000000.0);
+    chart->setTitle(s);
 
     //prevent infinite dataset
     if (mSeries->count() > CHART_X_RANGE_COUNT) {

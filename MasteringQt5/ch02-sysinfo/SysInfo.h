@@ -27,12 +27,18 @@ public:
     */
     virtual double memoryUsed() = 0;
 
+    virtual double rawMemoryUsed() = 0;
+    virtual double rawMemoryHave() = 0;
+
 protected:
     explicit SysInfo();
+    double memoryUsing;
+    double memoryTotal;
 
 private:
     SysInfo(const SysInfo& rhs);
     SysInfo& operator=(const SysInfo& rhs);
+
 };
 
 #endif // SYSINFO_H

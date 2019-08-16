@@ -17,6 +17,9 @@ public:
     void init() override;
     double cpuLoadAverage() override;
     double memoryUsed() override;
+    double rawMemoryUsed() override;
+    double rawMemoryHave() override;
+
 
 private:
 

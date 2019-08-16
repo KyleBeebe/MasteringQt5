@@ -3,7 +3,7 @@
 <body>
   <p> Reading through Mastering Qt 5 - Second Edition book and doing the exercises </p>
   
-  <img src"images/b10185_cover_new.png">
+  <img src"b10185_cover_new.png">
   
   <p>ISBN	9781788995399 </p>
   

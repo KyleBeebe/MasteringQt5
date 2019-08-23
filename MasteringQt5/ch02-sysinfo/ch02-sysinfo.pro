@@ -48,8 +48,8 @@ windows {
 }
 
 linux {
-    SOURCES += SysInfoLinuxImpl.cpp
-    HEADERS += SysInfoLinuxImpl.h
+    SOURCES += SysInfoLinux.cpp
+    HEADERS += SysInfoLinux.h
     message($$COMPILE_MSG linux)
 }
 

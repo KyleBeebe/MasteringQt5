@@ -1,5 +1,8 @@
 #include "SysInfoLinux.h"
 
+#include <QFile>
+#include <QIODevice>
+
 #include <sys/types.h>
 #include <sys/sysinfo.h>
 

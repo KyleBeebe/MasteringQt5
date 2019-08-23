@@ -5,9 +5,9 @@
 #ifdef Q_OS_WIN
     #include "SysInfoWindows.h"
 #elif defined(Q_OS_MAC)
-    #include "SysInfoMacImpl.h"
+    #include "SysInfoMac.h"
 #elif defined(Q_OS_LINUX)
-    #include "SysInfoLinuxImpl.h"
+    #include "SysInfoLinux.h"
 #endif
 
 SysInfo& SysInfo::instance()
@@ -15,9 +15,9 @@ SysInfo& SysInfo::instance()
     #ifdef Q_OS_WIN
         static SysInfoWindows singleton;
     #elif defined(Q_OS_MAC)
-        static SysInfoMacImpl singleton;
+        static SysInfoMac singleton;
     #elif defined(Q_OS_LINUX)
-        static SysInfoLinuxImpl singleton;
+        static SysInfoLinux singleton;
     #endif
 
     return singleton;

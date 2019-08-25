@@ -16,14 +16,12 @@ void PictureDao::init() const
 {
     if (!mDatabase.tables().contains("pictures")) {
         QSqlQuery query(mDatabase);
-        try {
+
             query.exec(QString("CREATE TABLE pictures")
             + " (id INTEGER PRIMARY KEY AUTOINCREMENT, "
             + "album_id INTEGER, "
             + "url TEXT)");
-        } catch (SqlQueryException& e) {
-            qDebug() << e.what();
-        }
+
 
     }
 }
@@ -38,11 +36,9 @@ void PictureDao::addPictureInAlbum(int albumId, Picture& picture) const{
     query.bindValue(":album_id", albumId);
     query.bindValue(":url", picture.fileUrl());
 
-    try {
-        query.exec();
-    } catch (SqlQueryException &e) {
-        qDebug() << e.what();
-    }
+
+    query.exec();
+
     //retrieve id of picture row just inserted
     picture.setId(query.lastInsertId().toInt());
     picture.setAlbumId(albumId);
@@ -56,11 +52,9 @@ void PictureDao::removePicture(int id) const{
     //bind picture table values
     query.bindValue(":id", id);
 
-    try {
-        query.exec();
-    } catch (SqlQueryException &e) {
-        qDebug() << e.what();
-    }
+
+    query.exec();
+
 }
 void PictureDao::removePicturesForAlbum(int albumId) const{
     QSqlQuery query(mDatabase);
@@ -70,29 +64,30 @@ void PictureDao::removePicturesForAlbum(int albumId) const{
     //bind picture table values
     query.bindValue(":album_id", albumId);
 
-    try {
-        query.exec();
-    } catch (SqlQueryException &e) {
-        qDebug() << e.what();
-    }
-}
-QVector<Picture*> PictureDao::picturesForAlbum(int albumId) const{
-    QSqlQuery query("SELECT * FROM pictures", mDatabase);
-    try {
-        query.exec();
-    } catch (SqlQueryException &e) {
-        qDebug() << e.what();
-    }
 
-    QVector<Picture*> list;
+    query.exec();
+
+}
+std::unique_ptr<std::vector<std::unique_ptr<Picture>>>
+    PictureDao::picturesForAlbum(int albumId) const{
+
+    QSqlQuery query("SELECT * FROM pictures", mDatabase);
+
+    query.exec();
+
+
+    std::unique_ptr<std::vector<std::unique_ptr<Picture>>>
+            list(new std::vector<std::unique_ptr<Picture>>);
+
     while(query.next()) {
         if(query.value("album_id").toInt() == albumId){
-            Picture* picture = new Picture();
+            std::unique_ptr<Picture> picture(new Picture());
+
             picture->setId(query.value("id").toInt());
             picture->setAlbumId(query.value("album_id").toInt());
             picture->setFileUrl(query.value("url").toUrl());
 
-            list.append(picture);
+            list->push_back(move(picture));
         }
     }
     return list;

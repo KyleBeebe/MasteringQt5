@@ -8,6 +8,7 @@
 #define ALBUMDAO_H
 
 #include <QVector>
+#include <memory>
 
 //forward declarations
 class QSqlDatabase;
@@ -50,7 +51,7 @@ public:
 
         @return QVector of Album pointers
     */
-    QVector<Album*> albums() const;
+    std::unique_ptr<std::vector<std::unique_ptr<Album>>> albums() const;
 
 private:
     QSqlDatabase& mDatabase;

@@ -1,17 +1,15 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2019-08-16T22:28:21
+# Project created by QtCreator 2019-08-22T23:17:30
 #
 #-------------------------------------------------
 
-QT       += sql
+QT       += core gui
 
-QT       -= gui
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = gallery-core
-TEMPLATE = lib
-
-DEFINES += GALLERYCORE_LIBRARY
+TARGET = gallery-desktop
+TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -24,20 +22,20 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+
 SOURCES += \
-        Album.cpp \
-        AlbumDao.cpp \
-        DatabaseManager.cpp \
-        Picture.cpp \
-        PictureDao.cpp \
-    albummodel.cpp
+        main.cpp \
+        mainwindow.cpp
 
 HEADERS += \
-        Album.h \
-        AlbumDao.h \
-        CustomExceptions.h \
-        DatabaseManager.h \
-        Picture.h \
-        PictureDao.h \
-        gallery-core_global.h \
-    albummodel.h
+        mainwindow.h
+
+FORMS += \
+        mainwindow.ui
+
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../gallery-core/release/ -lgallery-core
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../gallery-core/debug/ -lgallery-core
+else:unix: LIBS += -L$$OUT_PWD/../gallery-core/ -lgallery-core
+
+INCLUDEPATH += $$PWD/../gallery-core
+DEPENDPATH += $$PWD/../gallery-core

@@ -23,12 +23,10 @@ void AlbumDao::init() const{
 
     if(!mDatabase.tables().contains("albums")){
         QSqlQuery query(mDatabase);
-        try {
-            query.exec("CREATE TABLE albums (id INTEGER PRIMARY KEY "
-                       "AUTOINCREMENT, name TEXT)");
-        } catch (SqlQueryException &e) {
-            qDebug() << e.what();
-        }
+
+        query.exec("CREATE TABLE albums (id INTEGER PRIMARY KEY "
+            "AUTOINCREMENT, name TEXT)");
+
 
     }
 }
@@ -40,11 +38,9 @@ void AlbumDao::addAlbum(Album &album) const{
     //bind query name value to album name
     query.bindValue(":name", album.name());
 
-    try {
-        query.exec();
-    } catch (SqlQueryException &e) {
-        qDebug() << e.what();
-    }
+
+    query.exec();
+
     //retrieve id of album row just inserted
     album.setId(query.lastInsertId().toInt());
 }
@@ -56,28 +52,24 @@ void AlbumDao::removeAlbum(int id) const{
 
     query.bindValue(":id", id);
 
-    try {
-        query.exec();
-    } catch (SqlQueryException &e) {
-        qDebug() << e.what();
-    }
+
+    query.exec();
+
 }
 
-QVector<Album*> AlbumDao::albums() const
+std::unique_ptr<std::vector<std::unique_ptr<Album>>> AlbumDao::albums() const
 {
     QSqlQuery query("SELECT * FROM albums", mDatabase);
-    try {
-        query.exec();
-    } catch (SqlQueryException &e) {
-        qDebug() << e.what();
-    }
 
-    QVector<Album*> list;
+    query.exec();
+
+    unique_ptr<vector<unique_ptr<Album>>> list(new vector<unique_ptr<Album>>());
     while(query.next()) {
-        Album* album = new Album();
+
+        unique_ptr<Album> album(new Album());
         album->setId(query.value("id").toInt());
         album->setName(query.value("name").toString());
-        list.append(album);
+        list->push_back(move(album));
     }
     return list;
 }
@@ -90,10 +82,8 @@ void AlbumDao::updateAlbum(const Album& album) const{
     query.bindValue(":name", album.name());
     query.bindValue(":id", album.id());
 
-    try {
-        query.exec();
-    } catch (SqlQueryException &e) {
-        qDebug() << e.what();
-    }
+
+    query.exec();
+
 
 }

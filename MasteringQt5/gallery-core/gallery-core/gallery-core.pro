@@ -30,7 +30,8 @@ SOURCES += \
         DatabaseManager.cpp \
         Picture.cpp \
         PictureDao.cpp \
-    albummodel.cpp
+    AlbumModel.cpp \
+    PictureModel.cpp
 
 HEADERS += \
         Album.h \
@@ -40,4 +41,5 @@ HEADERS += \
         Picture.h \
         PictureDao.h \
         gallery-core_global.h \
-    albummodel.h
+    AlbumModel.h \
+    PictureModel.h

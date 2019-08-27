@@ -25,13 +25,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    AlbumListWidget.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    AlbumListWidget.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    AlbumListWidget.ui
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../gallery-core/release/ -lgallery-core
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../gallery-core/debug/ -lgallery-core
@@ -39,3 +42,6 @@ else:unix: LIBS += -L$$OUT_PWD/../gallery-core/ -lgallery-core
 
 INCLUDEPATH += $$PWD/../gallery-core
 DEPENDPATH += $$PWD/../gallery-core
+
+RESOURCES += \
+    resource.qrc

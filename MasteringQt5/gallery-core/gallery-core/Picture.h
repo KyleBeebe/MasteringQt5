@@ -1,3 +1,7 @@
+/**
+ * Represents an album's picture
+ *
+ */
 #ifndef PICTURE_H
 #define PICTURE_H
 
@@ -9,8 +13,10 @@
 class GALLERYCORESHARED_EXPORT Picture{
 
 public:
+
     Picture(const QString& filePath = "");
     Picture(const QUrl& fileUrl);
+
 
     int id() const;
     void setId(int id);
